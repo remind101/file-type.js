@@ -1,25 +1,28 @@
-/*! file-type.js - v0.0.1 - 2014-02-20 */(function(global) {
+/*! file-type.js - v0.0.2 - 2014-08-28 */(function(global) {
   var TYPES = {
     doc: [
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      /^application\/msword$/,
+      /^application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document$/
     ],
     xls: [
-      'application/excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      /^application\/excel$/,
+      /^application\/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet$/
     ],
     ppt: [
-      'application/powerpoint',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      /^application\/powerpoint$/,
+      /^application\/vnd\.openxmlformats-officedocument\.presentationml\.presentation$/
     ],
     pdf: [
-      'application/pdf'
+      /^application\/pdf$/
     ],
     zip: [
-      'application/zip'
+      /^application\/zip$/
     ],
     txt: [
-      'text/plain'
+      /^text\/plain$/
+    ],
+    audio: [
+      /^audio\/.*$/
     ]
   }
 
@@ -42,21 +45,11 @@
       var contentTypes = TYPES[type];
 
       for (var i = 0; i < contentTypes.length; i++) {
-        if (contentType === contentTypes[i]) {
-          found = type;
+        if (contentTypes[i].test(contentType)) {
+          return type;
         }
-        
-        if (found) {
-          break;
-        }
-      }
-
-      if (found) {
-        break;
       }
     }
-
-    return found;
   };
 
   global.fileType = fileType
